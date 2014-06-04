@@ -6,11 +6,14 @@ If you're making WPF or WP or even Monotouch and Monodroid applications these da
 
 ## Notes
 
-Demo code: https://github.com/shiftkey/octohipster
-Slides: 
+ - Demo application: https://github.com/shiftkey/octohipster
+ - Slides: https://github.com/shiftkey/talks/blob/master/NDC-Oslo-2014/ReactiveUI/reactive-ui-11.pdf
+ - LINQPad Rx demo: https://github.com/shiftkey/talks/blob/master/NDC-Oslo-2014/ReactiveUI/getting-started-rx.linq
+
+### TODO
 
  - [x] publish slides
  - [x] open source demo site
  - [x] publish LINQpad code
- - [ ] correct URLs
+ - [x] correct URLs
  - [ ] link to video when published
