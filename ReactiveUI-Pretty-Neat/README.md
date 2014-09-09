@@ -2,6 +2,14 @@
 
 The slides and notes from my talk at Sydney Mobile .NET Developers in September 2014.
 
+The Pitch:
+
+> ReactiveUI is an MVVM framework designed to write testable mobile and desktop applications in C#. But this isn't a sales pitch.
+
+> In this talk Brendan will go through the soup to nuts of what functional reactive programming is, why you should care, the inspiration behind ReactiveUI and how to use Reactive Extensions and ReactiveUI in your apps.
+
+> That's a lot to cover, but hopefully we can even touch on some Xamarin development during this talk.
+
 I'll write up some proper notes when I get a chance to recover.
 
 Other things I mentioned in the talk:
