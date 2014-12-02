@@ -6,7 +6,7 @@ Links:
 
  - The Repo: https://github.com/reactiveui/reactiveui
  - The Book: https://github.com/reactiveui/reactiveui/tree/master/docs
- - The Slack Room: https://reactivex.slack.com (if you'd like an invite, contact @paulcbetts)
+ - The Slack Room: https://reactivex.slack.com (if you'd like an invite, contact [@paulcbetts](https://twitter.com/paulcbetts/))
 
 Papers:
 
