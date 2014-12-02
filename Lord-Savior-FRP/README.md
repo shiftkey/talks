@@ -8,6 +8,13 @@ Links:
  - The Book: https://github.com/reactiveui/reactiveui/tree/master/docs
  - The Slack Room: https://reactivex.slack.com (if you'd like an invite, contact @paulcbetts)
 
+Papers:
+
+ - A Study and Toolkit for Asynchronous Programming in C# -  http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2013-016.pdf
+ - Functional Reactive Animation (ICFP 1997) - http://conal.net/papers/icfp97/
+ - Elm: Concurrent FRP for Functional GUIs - https://www.seas.harvard.edu/sites/default/files/files/archived/Czaplicki.pdf
+ - Elm: http://elm-lang.org/
+ 
 Other Interesting Things:
  
  - 101 Rx Samples: http://rxwiki.wikidot.com/101samples
