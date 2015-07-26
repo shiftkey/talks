@@ -6,6 +6,18 @@
 >
 > You should bring a laptop with Git installed, so you can follow along.
 
+## Guide
+
+Most of the instructions in this workshop represent command line actions.
+
+These are prefixed with the `>` character. Often these commands will also
+display output, which is displayed without a prefix.
+
+```
+> git --version
+git version 1.9.5.github.0
+```
+
 ## Walkthrough
 
 Git is a distributed version control system. But what does that even mean?
