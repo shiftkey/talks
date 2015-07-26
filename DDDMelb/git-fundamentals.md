@@ -84,8 +84,6 @@ details but often also includes the command to run if you've made a mistake
 somewhere along the way.
 
 
- - add
- - commit
  - log
  - checkout
  - merge
