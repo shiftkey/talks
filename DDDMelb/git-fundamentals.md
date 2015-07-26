@@ -37,6 +37,8 @@ touch README.md
 git status
 ```
 
+displays:
+
 > On branch master
 >
 > Initial commit
