@@ -29,8 +29,8 @@ The goal for this workshop is to answer this question:
 So let's start from the beginning.
 
 ```
-git init my-first-repo
-cd my-first-repo
+> git init my-first-repo
+> cd my-first-repo
 ```
 
 I've now created a local repository - however it's just a blank canvas.
@@ -45,20 +45,17 @@ repository from first principles.
 So let's add a file to the repository's directory:
 
 ```
-touch README.md
-git status
+> touch README.md
+> git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+       README.md
 ```
-
-displays:
-
-> On branch master
->
-> Initial commit
->
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
->        README.md
 
 `status` is your go-to command when you want to check the state of your
 repository. Typically you'll use it to see what changes are currently in your
@@ -94,6 +91,31 @@ Notice how `git status` is now showing a different message:
 Remember how I said `status` is useful? This is because it not only gives you
 details but often also includes the command to run if you've made a mistake
 somewhere along the way.
+
+So we're happy with our initial file, so let's commit this to the repository.
+
+Git requires a message to describe each commit, so let's do that:
+
+```
+> git commit -m "first commit!"
+[master (root-commit) 61db924] first commit!
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+```
+
+*Note: If we don't specify a message here, Git will launch your default text editor,
+so you can do multi-line commits. And you should do this, because bad commit
+messages make future programmers hate you. But I'm lazy.*
+
+So with that done, what's the status of our repository?
+
+```
+> git status
+On branch master
+nothing to commit, working directory clean
+```
+
+
 
 
  - log
