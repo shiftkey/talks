@@ -10,4 +10,9 @@
 
 ## TODO
 
-???
+- diff
+- tag
+- stash
+- reset
+- cherry-pick
+- rebase
