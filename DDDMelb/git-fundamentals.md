@@ -30,6 +30,7 @@ So let's start from the beginning.
 
 ```
 > git init my-first-repo
+Initialized empty Git repository in C:/code/my-first-repo/.git/
 > cd my-first-repo
 ```
 
@@ -73,20 +74,20 @@ part of our first commit.
 Git requires the user to stage the file before making a commit. So let's do that:
 
 ```
-git add README.md
-git status
+> git add README.md
+> git status
+On branch master
+
+ Initial commit
+
+ Changes to be committed:
+   (use "git rm --cached <file>..." to unstage)
+
+         new file:   README.md
 ```
 
 Notice how `git status` is now showing a different message:
 
-> On branch master
->
-> Initial commit
->
-> Changes to be committed:
->   (use "git rm --cached <file>..." to unstage)
->
->         new file:   README.md
 
 Remember how I said `status` is useful? This is because it not only gives you
 details but often also includes the command to run if you've made a mistake
@@ -114,6 +115,20 @@ So with that done, what's the status of our repository?
 On branch master
 nothing to commit, working directory clean
 ```
+
+Add another line with some words to the README, and check the status again:
+
+```
+> git status
+TODO: status output
+```
+
+Notice how we're seeing a slightly different message here compared to before?
+That's because since we committed the README, it's changes are being treated
+differently by Git when looking at the status of the repository.
+
+
+
 
 
 
