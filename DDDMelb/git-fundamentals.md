@@ -120,7 +120,14 @@ Add another line with some words to the README, and check the status again:
 
 ```
 > git status
-TODO: status output
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 Notice how we're seeing a slightly different message here compared to before?
