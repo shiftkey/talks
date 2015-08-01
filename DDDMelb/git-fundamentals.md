@@ -43,6 +43,8 @@ have a repository with the history pre-populated.
 Rather than do that, what we're going to do in this session is build up a
 repository from first principles.
 
+### Tracking Changes
+
 So let's add a file to the repository's directory:
 
 ```
@@ -91,6 +93,9 @@ Notice how `git status` is now showing a different message:
 Remember how I said `status` is useful? This is because it not only gives you
 details but often also includes the command to run if you've made a mistake
 somewhere along the way.
+
+
+### Committing a change
 
 So we're happy with our initial file, so let's commit this to the repository.
 
@@ -142,6 +147,8 @@ So let's stage this change and commit it:
  1 file changed, 2 insertions(+)
 ```
 
+### Viewing History
+
 So over time, as we continue to work on the files in our repository, we build up this long history of commits.
 
 At any time, you can check the history for your current branch using `log`:
@@ -173,10 +180,36 @@ There's a whole bunch of additional parameters to pass into log - here's a good 
 
 https://coderwall.com/p/euwpig/a-better-git-log
 
+### Branching
+
 Of course, making commits in this way is rather boring. And everyone talks about these "branches" things in Git. So let's go and create one of those.
 
+```
+> git checkout -b my-cool-feature
+Switched to a new branch 'my-cool-feature'
+```
+
+`checkout` is how you can change your working directory to a specific commit.
+
+Often, you'll use `checkout` to switch between branches:
+
+```
+> git checkout master
+Switched to branch 'master'
+```
+
+Other times, you'll want to undo changes in your working directory:
+
+
+```
+> git checkout -- README.md
+Switched to branch 'master'
+```
 
 
 
- - checkout
+
+### Pushing Changes
+
+
  - merge
