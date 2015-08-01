@@ -88,7 +88,6 @@ On branch master
 
 Notice how `git status` is now showing a different message:
 
-
 Remember how I said `status` is useful? This is because it not only gives you
 details but often also includes the command to run if you've made a mistake
 somewhere along the way.
@@ -134,9 +133,14 @@ Notice how we're seeing a slightly different message here compared to before?
 That's because since we committed the README, it's changes are being treated
 differently by Git when looking at the status of the repository.
 
+So let's stage this change and commit it:
 
-
-
+```
+> git add README.md
+> git commit -m "updated the README"
+[master 11d1834] updated the README
+ 1 file changed, 2 insertions(+)
+```
 
 
 
