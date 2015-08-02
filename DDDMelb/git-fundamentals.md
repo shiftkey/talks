@@ -343,8 +343,12 @@ Switched to branch 'master'
 ```
 
 Before continuing on to the next section, let's make one last change in the
-README. I'm deliberately going to edit the first line of the file, so we can
-trigger a merge conflict afterwards.
+README. I'm going to change the first line of the file to:
+
+> THIS IS THE MASTER BRANCH, YO
+
+I'm deliberately trying to trigger a merge conflict so we can see how this
+works.
 
 ```
 > git add README.md
@@ -362,6 +366,10 @@ Switched to branch 'my-cool-feature'
 
 And let's edit the first line to be something else:
 
+> I AM ON THE FEATURE BRANCH
+
+And let's commit this change:
+
 ```
 > git add README.md
 > git commit -m "changed first line to something else"
@@ -371,3 +379,32 @@ And let's edit the first line to be something else:
 
 Now, let's say our work is done and we need to merge this back into the `master`
 branch.
+
+```
+> git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+> git merge my-cool-feature
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Amd there's our merge conflict! Let's have a look at the status:
+
+```
+> git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
