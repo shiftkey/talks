@@ -97,7 +97,7 @@ somewhere along the way.
 
 ### Committing a change
 
-So we're happy with our initial file, so let's commit this to the repository.
+So we're happy with our initial file, let's commit this to the repository.
 
 Git requires a message to describe each commit, so let's do that:
 
@@ -180,9 +180,52 @@ There's a whole bunch of additional parameters to pass into log - here's a good 
 
 https://coderwall.com/p/euwpig/a-better-git-log
 
+### Pushing and Pulling Changes
+
+So we're making commits in our little repository, but how do we collaborate with other people?
+
+Git uses "remotes" to represent other repositories in your network. It uses the terms `push` and `pull` to represent publishing and retrieving changes from these other remotes.
+
+If you have a repository hosted somewhere like GitHub, add it to your repository:
+
+```
+> git remote add origin https://github.com/shiftkey/my-first-repo.git
+```
+
+I've set this up as an empty repository, so when I fetch the contents of this repository you'll see that nothing happens:
+
+```
+> git fetch
+```
+
+So now I want to publish the current state of my `master` branch:
+
+```
+> git push origin master
+Counting objects: 6, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (6/6), 492 bytes | 0 bytes/s, done.
+Total 6 (delta 0), reused 0 (delta 0)
+To https://github.com/shiftkey/my-first-repo.git
+ * [new branch]      master -> master
+```
+
+Don't worry too much about what this is saying here, but there's a couple of things to note:
+
+ - Git worked out that it needed to send 6 objects to the remote repository as part of publishing this branch
+ - 
+ - we created the `master` branch on the remote repository
+
+
+
+
+
+
+
 ### Branching
 
-Of course, making commits in this way is rather boring. And everyone talks about these "branches" things in Git. So let's go and create one of those.
+Everyone talks about these "branches" things in Git. So let's go and create one of those:
 
 ```
 > git checkout -b my-cool-feature
@@ -200,16 +243,10 @@ Switched to branch 'master'
 
 Other times, you'll want to undo changes in your working directory:
 
-
 ```
 > git checkout -- README.md
 Switched to branch 'master'
 ```
-
-
-
-
-### Pushing Changes
 
 
  - merge
