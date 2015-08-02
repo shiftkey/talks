@@ -408,3 +408,94 @@ Unmerged paths:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
+
+Git is holding our hand here with what we need to do to complete this merge
+successfully. Let's open our README and see what it looks like:
+
+> <<<<<<< HEAD
+> THIS IS THE MASTER BRANCH, YO
+> =======
+> I AM ON THE FEATURE BRANCH
+> >>>>>>> my-cool-feature
+>
+> ...
+
+Git adds the conflict markers to the file to indicate what needs to be
+reconciled. While it is really clever at understanding how to merge changes together, sometimes it still needs a human to step in.
+
+It's up to you what this should represent - you could have one line, the other,
+both lines, or something else altogether. Whatever you think the end result
+should be, ensure you remove the conflict markers.
+
+I'm going to keep both lines:
+
+> THIS IS THE MASTER BRANCH, YO
+> I AM ON THE FEATURE BRANCH
+>
+> ...
+
+Now that we're happy with that change, let's stage it:
+
+```
+> git add README.md
+> git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+
+	modified:   README.md
+
+```
+
+Let's commit this change, but rather than specify a message we'll use Whatever
+Git has created as part of resolving this merge conflict:
+
+```
+> git commit
+```
+
+You should be greeted by a commit message which looks like this:
+
+```
+Merge branch 'my-cool-feature'
+
+# Conflicts:
+#       README.md
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#       .git/MERGE_HEAD
+# and try again.
+#
+```
+
+Rather than having to write up the merge commit, Git has a standard template
+for these - most people just accept the defaults. Lines prefixed with a `#`
+are not included in the commit.
+
+> **Editor's note**
+> There's a chance here that the next command will put you into vi. Yes,
+> you've probably heard that old joke about "I've been stuck in vi for weeks
+> because I couldn't figure out how to close it."
+> Anyway, you *can* teach an old programmer new tricks - so here's how you
+> close `vi` (and vim is the same)::
+>
+> If you're in normal mode (the default mode for `vi`), just type `:wq`
+> - `:` is how you start a command
+> - `w` write the changes to disk
+> - `q` and quit
+
+After closing your editor, you should see this message:
+
+```
+[master e72989f] Merge branch 'my-cool-feature'
+> git status
+On branch master
+Your branch is ahead of 'origin/master' by 4 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
+```
