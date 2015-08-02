@@ -244,21 +244,21 @@ To https://github.com/shiftkey/my-first-repo.git
  * [new branch]      master -> master
 ```
 
-This is definitely intimidating to see if you're not familiar with it, but
-here's a TL;DR: of what's happening here:
-
- - Git worked out that it needed to send some objects to the remote repository -
-   because they don't exist there
- - these objects are compressed and sent to the remote repository
- - once those objects are created on the remote repository, the references on
-   the remote repository can be updated
- - because it didn't exist, Git also created the `master` branch on the remote
-   repository
+> **Editor's Note**
+> Here's a TL;DR of what's happening here:
+>
+> - Git worked out that it needed to send some objects to the remote repository -
+>   because they don't exist there
+> - these objects are compressed and sent to the remote repository
+> - once those objects are created on the remote repository, the references on
+>   the remote repository can be updated
+> - because it didn't exist, Git also created the `master` branch on the remote
+>   repository
 
 A quick note about branches now we're pushing and pulling:
 
  - branch names can be different between repositories - it just means some
-   command gymnastics to manage this. I generally avoid this, and recommend
+   gymnastics to configure your repo. I generally avoid this, and recommend
    beginners don't fight this convention.
  - when you push a change to a branch, Git will confirm the push is safe to do.
    If it's not safe, it will spit out an error about how things need to be
@@ -314,18 +314,12 @@ Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
 ```
 
-
-
-
-
-
-
-
-
-
 ### Branching
 
-Everyone talks about these "branches" things in Git. So let's go and create one of those:
+We've gotten this far without even creating a branch. How dumb is that? Everyone
+talks about these "branches" things in Git.
+
+So let's go and create one of those:
 
 ```
 > git checkout -b my-cool-feature
@@ -348,5 +342,32 @@ Other times, you'll want to undo changes in your working directory:
 Switched to branch 'master'
 ```
 
+Before continuing on to the next section, let's make one last change in the
+README. I'm deliberately going to edit the first line of the file, so we can
+trigger a merge conflict afterwards.
 
- - merge
+```
+> git add README.md
+> git commit -m "changed first line"
+[master af8301b] changed first line
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Let's go back to our feature branch:
+
+```
+> git checkout my-cool-feature
+Switched to branch 'my-cool-feature'
+```
+
+And let's edit the first line to be something else:
+
+```
+> git add README.md
+> git commit -m "changed first line to something else"
+[master b35db61] changed first line to something else
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Now, let's say our work is done and we need to merge this back into the `master`
+branch.
