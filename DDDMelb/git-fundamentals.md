@@ -198,7 +198,7 @@ I've set this up as an empty repository, so when I fetch the contents of this re
 > git fetch
 ```
 
-So now I want to publish the current state of my `master` branch:
+Now I want to publish the current state of my `master` branch:
 
 ```
 > git push origin master
@@ -211,13 +211,19 @@ To https://github.com/shiftkey/my-first-repo.git
  * [new branch]      master -> master
 ```
 
-Don't worry too much about what this is saying here, but there's a couple of things to note:
+This is definitely intimidating to see if you're not familiar with it, but here's a TL;DR: of what's happening here:
 
- - Git worked out that it needed to send 6 objects to the remote repository as part of publishing this branch
- - 
- - we created the `master` branch on the remote repository
+ - Git worked out that it needed to send some objects to the remote repository - because they don't exist there
+ - these objects are compressed and sent to the remote repository
+ - once those objects are created on the remote repository, the references on the remote repository can be updated
+ - because it didn't exist, Git created the `master` branch on the remote repository
 
+A quick note about branches now we're pushing and pulling:
 
+ - branch names can be different between repositories - it just means some command gymnastics to manage this. I generally avoid this, and recommend beginners don't fight against these conventions
+ - when you're pushing a branch name, Git will confirm the push makes sense. If it doesn't, it will spit out a lovely error, like this:
+
+ 
 
 
 
