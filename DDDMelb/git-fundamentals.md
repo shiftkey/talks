@@ -108,9 +108,34 @@ Git requires a message to describe each commit, so let's do that:
  create mode 100644 README.md
 ```
 
-*Note: If we don't specify a message here, Git will launch your default text editor,
-so you can do multi-line commits. And you should do this, because bad commit
-messages make future programmers hate you. But I'm lazy.*
+> **Editor's Note**
+> If we don't specify a message here, Git will launch your default text editor,
+> so you can create multi-line commits. And you should do this, because bad
+> commit messages make future programmers hate you. But I'm lazy.
+
+Git uses SHA-1 as identifiers for it's objects. For our commit, it uses various
+pieces of information to generate this unique identifier:
+
+ - commit contents
+ - committer and reviewer details
+ - parent commit SHA
+ - timestamp
+
+If any of these values change, a different commit SHA is created.
+
+> **Editor's Note**
+> If you're feeling a bit uncomfortable about SHA collisions or not using
+> SHA-256, here's a [quote](http://git-scm.com/book/en/v2/Git-Tools-Revision-Selection)
+> to put you at ease:
+>
+> *"If all 6.5 billion humans on Earth were programming, and every second, each
+> one was producing code that was the equivalent of the entire Linux kernel
+> history (3.6 million Git objects) and pushing it into one enormous Git
+> repository, it would take roughly 2 years until that repository contained
+> enough objects to have a 50% probability of a single SHA-1 object collision.
+> A higher probability exists that every member of your programming team will
+> be attacked and killed by wolves in unrelated incidents on the same night."*
+>
 
 So with that done, what's the status of our repository?
 
@@ -149,7 +174,8 @@ So let's stage this change and commit it:
 
 ### Viewing History
 
-So over time, as we continue to work on the files in our repository, we build up this long history of commits.
+So over time, as we continue to work on the files in our repository, we build up
+this long history of commits.
 
 At any time, you can check the history for your current branch using `log`:
 
@@ -168,7 +194,8 @@ Date:   Sat Aug 1 13:58:46 2015 +0930
     first commit!
 ```
 
-This is a great way to look back at your history. But that's rather verbose - so let's simplify it a bit:
+This is a great way to look back at your history. But that's rather verbose - so
+let's simplify it a bit:
 
 ```
 > git log --oneline
@@ -176,23 +203,29 @@ This is a great way to look back at your history. But that's rather verbose - so
 ef49944 first
 ```
 
-There's a whole bunch of additional parameters to pass into log - here's a good example of what you can do:
+There's a whole bunch of additional parameters to pass into log - here's a good
+example of what you can do:
 
 https://coderwall.com/p/euwpig/a-better-git-log
 
 ### Pushing and Pulling Changes
 
-So we're making commits in our little repository, but how do we collaborate with other people?
+So we're making commits in our little repository, but how do we collaborate with
+other people?
 
-Git uses "remotes" to represent other repositories in your network. It uses the terms `push` and `pull` to represent publishing and retrieving changes from these other remotes.
+Git uses "remotes" to represent other repositories in your network. It uses the
+terms `push` and `pull` to represent publishing and retrieving changes from
+these other remotes.
 
-If you have a repository hosted somewhere like GitHub, add it to your repository:
+If you have a repository hosted somewhere like GitHub, add it to your
+repository:
 
 ```
 > git remote add origin https://github.com/shiftkey/my-first-repo.git
 ```
 
-I've set this up as an empty repository, so when I fetch the contents of this repository you'll see that nothing happens:
+I've set this up as an empty repository, so when I fetch the contents of this
+repository you'll see that nothing happens:
 
 ```
 > git fetch
@@ -211,19 +244,80 @@ To https://github.com/shiftkey/my-first-repo.git
  * [new branch]      master -> master
 ```
 
-This is definitely intimidating to see if you're not familiar with it, but here's a TL;DR: of what's happening here:
+This is definitely intimidating to see if you're not familiar with it, but
+here's a TL;DR: of what's happening here:
 
- - Git worked out that it needed to send some objects to the remote repository - because they don't exist there
+ - Git worked out that it needed to send some objects to the remote repository -
+   because they don't exist there
  - these objects are compressed and sent to the remote repository
- - once those objects are created on the remote repository, the references on the remote repository can be updated
- - because it didn't exist, Git created the `master` branch on the remote repository
+ - once those objects are created on the remote repository, the references on
+   the remote repository can be updated
+ - because it didn't exist, Git also created the `master` branch on the remote
+   repository
 
 A quick note about branches now we're pushing and pulling:
 
- - branch names can be different between repositories - it just means some command gymnastics to manage this. I generally avoid this, and recommend beginners don't fight against these conventions
- - when you're pushing a branch name, Git will confirm the push makes sense. If it doesn't, it will spit out a lovely error, like this:
+ - branch names can be different between repositories - it just means some
+   command gymnastics to manage this. I generally avoid this, and recommend
+   beginners don't fight this convention.
+ - when you push a change to a branch, Git will confirm the push is safe to do.
+   If it's not safe, it will spit out an error about how things need to be
+   reconciled. I'll explain this later.
 
- 
+When we're working with remote branches, we should ensure we're tracking these
+changes:
+
+```
+> git branch -u origin/master
+Branch master set up to track remote branch master from origin.
+> git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+
+I'm going to make a commit on GitHub and then pull that into this branch.
+
+Now, we can just fetch to see what's changed:
+
+```
+> git fetch
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/shiftkey/my-first-repo
+   11d1834..25da24c  master     -> origin/master
+> git status
+On branch master
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working directory clean
+```
+
+See here how there's a new commit on the remote repository's `master` branch?
+But we're haven't applied this change to our local branch?
+
+Let's do that:
+
+```
+> git pull origin master
+From https://github.com/shiftkey/my-first-repo
+ * branch            master     -> FETCH_HEAD
+Updating 11d1834..25da24c
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+> git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+
+
+
+
+
 
 
 
