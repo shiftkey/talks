@@ -489,7 +489,7 @@ are not included in the commit.
 > - `w` write the changes to disk
 > - `q` and quit
 
-After closing your editor, you should see this message:
+After closing your editor, you should see a message like this:
 
 ```
 [master e72989f] Merge branch 'my-cool-feature'
@@ -499,3 +499,26 @@ Your branch is ahead of 'origin/master' by 4 commits.
   (use "git push" to publish your local commits)
 nothing to commit, working directory clean
 ```
+
+This means we've taken the work from our branch, merged it with what's currently
+in the default branch, and are now ready to push it to the remote repository.
+
+```
+> git push origin master
+Counting objects: 12, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (12/12), 1.10 KiB | 0 bytes/s, done.
+Total 12 (delta 1), reused 0 (delta 0)
+To https://github.com/shiftkey/my-first-repo.git
+   25da24c..e72989f  master -> master
+```
+
+And we can delete the local branch:
+
+```
+> git branch -d my-cool-feature
+Deleted branch my-cool-feature (was 3dd3755).
+```
+
+Congratulations!
