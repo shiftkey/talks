@@ -1,12 +1,11 @@
-# Git Workshops
-## DDD Melbourne
+# Git Workshops - DDD Melbourne
 
 This workshop is divided into two sessions.
 
 The first is a [Git Fundamentals](https://github.com/shiftkey/talks/blob/master/DDDMelb/git-fundamentals.md)
 course, where we get started and run through some of the core concepts of Git.
 
-The second is a bit more audience-driven, so there's a choice of sections which
+The second is a bit more audience-driven, so there's a choice of topics which
 we won't all address today:
 
  - [**Do you even commit?**](https://github.com/shiftkey/talks/blob/master/DDDMelb/git-internals.md) - a walk through Git Internals
