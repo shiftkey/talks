@@ -117,6 +117,26 @@ But what's a tree? To use a crude analogy, a tree is kinda like a folder:
  - A tree can contain blobs or other trees.
  - A folder can contain files or other folders.
 
+We can view the contents of a tree using `ls-tree`:
+
+```
+> git ls-tree HEAD
+100644 blob 6b2876824aa1d5a7ce70d9b182f239ee332460a9	README.md
+040000 tree 361a8def7dab52fede98f7cf6290d452c62ec0d7	docs
+```
+
+Notice how our docs folder is also stored as a tree - that's the sort of
+recursion we can leverage to create complex hierarchies of files.
+
+It's hash is computed based on the blobs it contains:
+
+```
+> git ls-tree 361a8def7dab52fede98f7cf6290d452c62ec0d7
+100644 blob 27df989be2ec5c95cf626c02be47c7b5adbe35fa	another-page.md
+```
+
+And there's our other file.
+
 Now we need to transform the contents of our index into a tree:
 
 ```
@@ -213,3 +233,32 @@ on the other repository:
 > git push origin master
 ...
 ```
+
+## Summary
+
+So let's take a note of what this all means:
+
+ - because Git stores the blob contents of files, rather than a delta, Git hash
+   a significant weakness when it comes to large binary files which change often
+
+ - trees means Git can compare things efficiently (when two trees are the same,
+   we know their content is the same) - this means operations like `diff` can be
+   optimized.  
+
+ - when we do actions like `cherry-pick` a few steps occur:
+   - the patch representing the change (`{sha}..{sha^1}`) is generated
+   - this patch is applied to `HEAD`
+   - a commit message is created, mentioning the hash of the source commit
+   - if the patch applies cleanly, a new commit is automagically created
+   - if it doesn't it's up to the user to resolve the conflicts and manually
+     commit the change
+   This means you'll end up with new commit representing the same change - and
+   why the commit message will reference the old hash.
+
+ - in addition to using the index, Git uses specific files named under `.git/`
+   to indicate long-running tasks like merging or rebasing.
+
+## Further Reading
+
+ - `git gc` and packfiles - how, over time, Git tunes your repository contents
+       [link](http://git-scm.com/book/en/v2/Git-Internals-Packfiles)
