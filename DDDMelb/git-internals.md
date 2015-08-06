@@ -16,9 +16,9 @@ Checking connectivity... done.
 > cd fun-with-internals
 ```
 
-### Blobs
+## Blobs
 
-Blobs are the content of files in a repository.
+Blobs (binary large object files) are the content of files in a repository.
 These are kinda boring, but also very essential.
 
 Blobs in Git each have an identifier, which is just the hash of their contents:
@@ -37,7 +37,7 @@ Let's make a change to the README and run it again:
 ea78341ae4ff38abc206d49a51ed4cc2579805f7
 ```
 
-Great, our content change is picked up as a new has.
+Great, our content change is picked up as a new hash.
 
 If you have a git-enhanced prompt you're probably seeing it has also detected
 the change.
@@ -56,13 +56,14 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-But let's not use `add` here. Let's understand how Git detects this change:
+At this point we'd have add this file and make a new commit. But let's not use
+`add` here. Let's understand how Git detects this change:
 
-Git has what's called an index. It represents the current state of your working
-tree. You might have poked the contents of `.git/index` before, but don't worry
-about that for now - it's an implementation detail.
+Git has what's called an `index`. It represents the current state of your
+working tree. You might have poked the contents of `.git/index` before, but
+don't worry about that for now - it's an implementation detail.
 
-So Git knows we've got a modified file on disk, but we can ask it for the state
+So Git knows we've got a modified file on disk, but we can ask Git for the state
 of the index:
 
 ```
@@ -71,7 +72,7 @@ of the index:
 100644 27df989be2ec5c95cf626c02be47c7b5adbe35fa 0	docs/another-page.md
 ```
 
-As We've not updated the index, we have the old hash for our README. We need
+As We've not updated the index, we see the old hash for our README. We need
 to update the index to point to our new README contents.
 
 First we have to write our new blob to the object database:
@@ -109,7 +110,7 @@ result.
 I highly recommend calling out the rename separate to any content changes,
 make the rename an atomic change (don't mix it up with content).
 
-### Trees
+## Trees
 
 But what's a tree? To use a crude analogy, a tree is kinda like a folder:
 
@@ -130,7 +131,12 @@ And Git knows this is a tree:
 tree
 ```
 
-So let's go and use this tree for a commit:
+## Commit
+
+A commit requires a tree and some other pieces of data. I'm lazy, so let's use
+the defaults which are configured for the repository.
+
+At a minimum, we need a tree and a commit message. So let's do that:
 
 ```
 > git commit-tree 6c253caf1b2034e45b7b24e9ac9a39deb3074fd3 -p HEAD -m "edited the README"
@@ -138,10 +144,12 @@ eb7cd9c46f0e16afc905a83647d794631a031dfc
 ```
 
 This is the hash for our new commit. If I crack it open I can see that it's
-added my details as the committer (and author):
+added my details:
+
+TODO: is this right?
 
 ```
-> git cat-file -p eb7cd9c46f0e16afc905a83647d794631a031dfc
+> git show -p eb7cd9c46f0e16afc905a83647d794631a031dfc
 tree 6c253caf1b2034e45b7b24e9ac9a39deb3074fd3
 parent 91fd1bcb6e14d47faacb95231a942c963b24b4ce
 author Brendan Forster <brendan@github.com> 1438837181 +1000
@@ -149,6 +157,8 @@ committer Brendan Forster <brendan@github.com> 1438837181 +1000
 
 edited the README
 ```
+
+## Refs
 
 And the last piece of this puzzle is what Git calls `refs` - you can kinda think
 of these as branches, but a more accurate analogy is a pointer to an address.
