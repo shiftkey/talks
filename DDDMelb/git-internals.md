@@ -30,11 +30,30 @@ Blobs in Git each have an identifier, which is just the hash of their contents:
 
 So we have a relative path, some contents and the hash of the contents.
 
-Let's make a change to the README and run it again:
+Let's make a change to the README:
+
+
+**WARNING:** if you're using PowerShell you might want to use this:
+
+```
+> Add-Content README.md "added some words" -Encoding UTF7
+```
+
+Because PowerShell will happily take your Unicode string and append it directly
+
+In other environments, you should be able to get away with this:
+
+```
+> "added some words" >> README.md
+```
+
+Or just, y'know, open an editor?
+
+Anyway, we've done this so let's check our modified file:
 
 ```
 > git hash-object README.md
-ea78341ae4ff38abc206d49a51ed4cc2579805f7
+5e26b00f145128741468deaf15cd61f7515cb640
 ```
 
 Great, our content change is picked up as a new hash.
@@ -79,7 +98,7 @@ First we have to write our new blob to the object database:
 
 ```
 > git hash-object -w README.md
-ea78341ae4ff38abc206d49a51ed4cc2579805f7
+5e26b00f145128741468deaf15cd61f7515cb640
 ```
 
 At this point the object is orphaned - nothing links to it, so it could be
@@ -89,26 +108,16 @@ repository.
 We now tell the index to use our new blob for the README.md file:
 
 ```
-> git update-index --add --cacheinfo 100644 ea78341ae4ff38abc206d49a51ed4cc2579805f7 README.md
+> git update-index --add --cacheinfo 100644 5e26b00f145128741468deaf15cd61f7515cb640 README.md
 ```
 
 So our index now reflects the commit we want to create:
 
 ```
 > git ls-files --stage
-100644 ea78341ae4ff38abc206d49a51ed4cc2579805f7 0	README.md
+100644 5e26b00f145128741468deaf15cd61f7515cb640 0	README.md
 100644 27df989be2ec5c95cf626c02be47c7b5adbe35fa 0	docs/another-page.md
 ```
-
-### A Note About Renames
-
-To Git, renaming a file is equivalent to removing a file at path A and then
-adding the file again at path B. However users may change the contents of the
-file as part of this operation, which means you might not get the expected
-result.
-
-I highly recommend calling out the rename separate to any content changes,
-make the rename an atomic change (don't mix it up with content).
 
 ## Trees
 
@@ -141,15 +150,26 @@ Now we need to transform the contents of our index into a tree:
 
 ```
 > git write-tree
-6c253caf1b2034e45b7b24e9ac9a39deb3074fd3
+b2d45554628859d91694a097fee137f9c1786ee3
 ```
 
 And Git knows this is a tree:
 
 ```
-> git cat-file -t 6c253caf1b2034e45b7b24e9ac9a39deb3074fd3
+> git cat-file -t b2d45554628859d91694a097fee137f9c1786ee3
 tree
 ```
+
+### A Note About Renames
+
+To Git, renaming a file is equivalent to removing a file at path A and then
+adding the file again at path B. However users may change the contents of the
+file as part of this operation, which means you might not get the expected
+result.
+
+I highly recommend calling out the rename separate to any content changes,
+make the rename an atomic change (don't mix it up with content).
+
 
 ## Commit
 
@@ -170,13 +190,17 @@ TODO: is this right?
 
 ```
 > git show -p eb7cd9c46f0e16afc905a83647d794631a031dfc
-tree 6c253caf1b2034e45b7b24e9ac9a39deb3074fd3
-parent 91fd1bcb6e14d47faacb95231a942c963b24b4ce
-author Brendan Forster <brendan@github.com> 1438837181 +1000
-committer Brendan Forster <brendan@github.com> 1438837181 +1000
+commit 07b03619b2c8055f472cdd5e5003226ea74353cd
+Author: Brendan Forster <brendan@github.com>
+Date:   Fri Aug 7 15:40:50 2015 +1000
 
-edited the README
+    edited the README
+
+diff --git a/README.md b/README.md
+index 6b28768..5e26b00 100644
+Binary files a/README.md and b/README.md differ
 ```
+
 
 ## Refs
 
