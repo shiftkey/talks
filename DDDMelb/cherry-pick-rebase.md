@@ -3,14 +3,15 @@
 Consider these two branches:
 
 ```
-          A---B---C---D---E robrix
+          A---B---C---D---E @robrix
          /
     F---G---H---I master
             \
-            H---I shiftkey
+            J---K shiftkey
+                ^
 ```
 
-Let's say that A was actually a bugfix, which I want to incorporate directly onto my branch - because I need it and I'm not sure when this will land.
+Let's say that commit `A` was actually a bugfix, which I want to incorporate directly onto my branch - because I need it and I'm not sure when this will land.
 
 There's other ways that I could achieve this:
 
@@ -19,4 +20,27 @@ There's other ways that I could achieve this:
 
 And these are both terrible, because @robrix is a machine and has done a whole bunch of other work that I don't really care about (or want t)
 
-So let's talk about
+So we're left with `git cherry-pick A` to pull this in. But let's talk through the process:
+
+ - Git adds a file named `.git/CHERRY_PICK_HEAD` to the repository, containing the SHA you want to target to this branch
+ - Git adds a file named `.git/COMMIT_EDITMSG` which contains the original commit message
+ - Git generates a diff between `A` and `G` - think of this as basically a patch - let's call it `A*`
+ - Git applies this patch to `HEAD`, which is currently `K`
+   - if the patch applies cleanly, Git can create the commit automatically
+   - if the patch doesn't apply cleanly, that means we have a conflict. Git updates the `COMMIT_EDITMSG` to indicate what files are conflicted (commented out). This often occurs when the current working tree has changed significantly and Git cannot resolve the differences.
+   Once the user has resolved the conflicts they can complete the process by doing `git commit` - which let's you edit the original commit message if you feel like it.
+
+Once you're done with the cherry-pick, this is the history you have:
+
+```
+             A---B---C---D---E @robrix
+            /
+       F---G---H---I master
+               \
+               J---K---L shiftkey
+                       ^
+```
+
+Notice how I have a completely different commit on this branch? That's because the commit hash is different - it might have been the same changes, applied cleanly, from the same author, but Git cares about more than the commit contents when it creates a commit.
+
+In particular, I get a new hash here because the parent is `K`, not `G`.
