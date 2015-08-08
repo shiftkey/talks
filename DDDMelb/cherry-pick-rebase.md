@@ -11,8 +11,6 @@ Consider these two branches:
                 ^
 ```
 
-
-
 Let's say that commit `A` was actually a bugfix, which I want to incorporate
 directly onto my branch - because I need it and I'm not sure when this will land.
 
@@ -137,6 +135,65 @@ Congratulations, you've done a `rebase`!
 ```
 > git rebase master @shiftkey
 ```
+
+Taking this one step further - what if we didn't want to bring over the whole
+branch? What if we wanted to only use `A` `B` and `D`?
+
+This is where interactive rebase comes in:
+
+```
+> git rebase -i master @shiftkey
+```
+
+By passing `-i` we get an opportunity to review the commits which will be
+applied to create the new branch.
+
+When you run that command Git will open a file which looks like this in your
+default text editor:
+
+```
+pick f818b6b A
+pick c086da3 B
+pick 72cfc5d C
+pick dab7bf8 D
+
+# Rebase e202c61..f0ababa onto e202c61 (       5 TODO item(s))
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like "squash", but discard this commit's log message
+#  x, exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+...
+```
+
+So you could delete the line mentioning `C` and then close your editor, which
+will kick off the rebase using the modified commits.
+
+Note that at this point you can rename `pick` on each line to do things like:
+
+ - pause the rebase at a certain commit to change it's message
+ - pause the rebase at a certain point to change the contents
+ - squash a commit into it's ancestor (you may want to keep the message around)
+
+You can also reorder commits to better describe the branch state.
+
+Scenarios where you might really care about rebase:
+
+ - revive an old branch and base it on the current `HEAD`
+ - take a large history of really small commits and sort them so they make sense
+ - extract bugfixes and refactoring from a feature branch, to turn your
+large branch into a number of smaller branches
 
 And at some point, you'll see the old commits be dereferenced and
 garbage-collected, so your graph then looks like this:
